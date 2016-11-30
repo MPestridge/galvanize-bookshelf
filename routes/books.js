@@ -4,10 +4,11 @@ const express = require('express');
 const router = express.Router();
 const knex = require('../knex');
 const {camelizeKeys, decamelizeKeys} = require('humps');
+const boom = require('boom');
 
 router.get('/books', (_req, res, next) => {
   knex('books')
-    .orderBy('id')
+    .orderBy('title')
     .then((books) => {
       res.send(camelizeKeys(books));
     })
@@ -30,5 +31,7 @@ router.get('books/:id', (req, res, next) => {
     next(err);
   });
 });
+
+router.post('/')
 
 module.exports = router;
